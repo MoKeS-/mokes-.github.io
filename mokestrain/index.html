@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="MokesTrain pour Android : les trains Haguenau ⇄ Strasbourg, le bus et le tram CTS en temps réel.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="icone.svg" type="image/svg+xml">
+<title>MokesTrain pour Android</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Mise en page : une colonne étroite, ouverte par un tableau des départs et le téléchargement, puis les écrans et l'installation. */
+  :root {
+    --bg: #F2F6EF;
+    --surface: #FFFFFF;
+    --fg: #10291F;
+    --muted: #4E6358;
+    --line: #D5E1D0;
+    --brand: #12372A;
+    --brand-fg: #EAF6E2;
+    --signal: #8FD16F;
+    --signal-ink: #2F6B1B;
+    --late: #B4561F;
+    --display: "Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+    --body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0C1C16; --surface: #15291F; --fg: #E5EFE0; --muted: #9DB2A4; --line: #24402F;
+      --brand: #1B4634; --brand-fg: #EAF6E2; --signal: #8FD16F; --signal-ink: #9FDB80; --late: #F0A06A;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0C1C16; --surface: #15291F; --fg: #E5EFE0; --muted: #9DB2A4; --line: #24402F;
+    --brand: #1B4634; --brand-fg: #EAF6E2; --signal: #8FD16F; --signal-ink: #9FDB80; --late: #F0A06A;
+    color-scheme: dark;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font: 400 1.0625rem/1.6 var(--body);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  img { max-width: 100%; }
+  .page { max-width: 62rem; margin: 0 auto; padding-block: 2rem 3rem; display: grid; gap: 4.5rem; }
+  h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; border-radius: 6px; }
+
+  /* En-tête */
+  .masthead { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: .75rem; font: 700 1.25rem var(--display); }
+  .brand img { width: 44px; height: 44px; border-radius: 50%; }
+  .tag {
+    font: 500 .75rem var(--mono); letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: .3rem .75rem;
+  }
+
+  /* Ouverture */
+  .hero { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 3rem; align-items: center; }
+  .hero-text { display: grid; gap: 1.5rem; min-width: 0; }
+  .hero h1 { font-size: clamp(2.4rem, 6vw, 3.9rem); line-height: 1.02; font-weight: 800; letter-spacing: -.02em; }
+  .hero h1 em { font-style: normal; color: var(--signal-ink); }
+  .lead { color: var(--muted); font-size: 1.15rem; max-width: 34rem; }
+
+  .board {
+    background: var(--brand); color: var(--brand-fg); border-radius: 14px; padding: .4rem 1.1rem;
+    display: grid; font-variant-numeric: tabular-nums; max-width: 30rem;
+  }
+  .board-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; padding: .7rem 0; }
+  .board-row + .board-row { border-top: 1px solid rgb(255 255 255 / .12); }
+  .board time { font: 700 1.6rem var(--display); }
+  .board .dest { font-size: .95rem; opacity: .85; min-width: 0; }
+  .board .dest b { display: block; font-size: 1rem; opacity: 1; }
+  .status { font: 700 .9rem var(--body); color: var(--signal); white-space: nowrap; }
+  .status.late { color: #FFB27F; }
+
+  .download { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
+  .button {
+    display: inline-flex; align-items: center; gap: .65rem; text-decoration: none;
+    background: var(--signal); color: #0E2A1C; font: 700 1.1rem var(--display);
+    padding: 1rem 1.6rem; border-radius: 999px;
+    box-shadow: 0 6px 18px -8px rgb(47 107 27 / .6);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .button:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -8px rgb(47 107 27 / .7); }
+  .button svg { width: 22px; height: 22px; }
+  .meta { color: var(--muted); font: 400 .85rem/1.5 var(--mono); }
+
+  .phone { justify-self: center; width: min(100%, 290px); }
+  .phone img, .shot img {
+    display: block; width: 100%; height: auto; border-radius: 26px;
+    border: 6px solid var(--fg); background: var(--fg);
+  }
+
+  /* Écrans */
+  .section-head { display: grid; gap: .5rem; margin-bottom: 2rem; }
+  .eyebrow { font: 500 .75rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--signal-ink); }
+  h2 { font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 700; letter-spacing: -.01em; }
+  .gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem 1.5rem; }
+  .shot { display: grid; gap: .9rem; margin: 0; align-content: start; }
+  .shot img { border-width: 4px; border-radius: 20px; }
+  .shot figcaption { display: grid; gap: .2rem; }
+  .shot figcaption b { font: 700 1.05rem var(--display); }
+  .shot figcaption span { color: var(--muted); font-size: .95rem; line-height: 1.45; }
+  .wide { grid-column: span 2; }
+  .wide img { border: 0; border-radius: 20px; background: none; }
+
+  /* Installation */
+  .install { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 2rem; display: grid; gap: 1.75rem; }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; counter-reset: step; }
+  .steps li { counter-increment: step; display: grid; gap: .4rem; align-content: start; }
+  .steps li::before {
+    content: counter(step); width: 2rem; height: 2rem; border-radius: 50%;
+    display: grid; place-items: center; background: var(--brand); color: var(--brand-fg); font: 700 1rem var(--display);
+  }
+  .steps b { font: 700 1.05rem var(--display); }
+  .steps span { color: var(--muted); font-size: .95rem; }
+  .note { border-top: 1px solid var(--line); padding-top: 1.25rem; color: var(--muted); font-size: .95rem; max-width: 46rem; }
+  .note strong { color: var(--fg); }
+
+  footer { display: grid; gap: .4rem; color: var(--muted); font-size: .85rem; }
+  .hash { font: 400 .75rem var(--mono); overflow-wrap: anywhere; }
+
+  @media (max-width: 860px) {
+    .hero { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+    .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .steps { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 420px) {
+    .page { gap: 3.5rem; padding-block: 1.25rem 2.5rem; }
+    .install { padding: 1.4rem; }
+    .gallery { gap: 1.5rem 1rem; }
+    .button { width: 100%; justify-content: center; }
+  }
+  @media (prefers-reduced-motion: reduce) { .button { transition: none; } .button:hover { transform: none; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="masthead">
+    <div class="brand"><img src="icone.svg" alt="">MokesTrain</div>
+    <span class="tag">Pilote Android · v1.0</span>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Ton train, <em>à la minute près.</em></h1>
+      <p class="lead">Les prochains trains entre Haguenau et Strasbourg avec leurs retards et leur voie, le bus et le tram CTS en temps réel, des widgets et une alerte avant de partir.</p>
+
+      <div class="board" aria-label="Exemple de départs">
+        <div class="board-row"><time>07:12</time><span class="dest"><b>Strasbourg</b>Voie 2</span><span class="status">À l'heure</span></div>
+        <div class="board-row"><time>07:41</time><span class="dest"><b>Strasbourg</b>Voie 1</span><span class="status late">+4 min</span></div>
+        <div class="board-row"><time>08:10</time><span class="dest"><b>Strasbourg</b>Car TER</span><span class="status">À l'heure</span></div>
+      </div>
+
+      <div class="download">
+        <a class="button" href="MokesTrain-1.0.apk" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
+          Télécharger l'app
+        </a>
+        <p class="meta">APK · 2,9 Mo<br>Android 8.0 ou plus récent</p>
+      </div>
+    </div>
+    <div class="phone"><img src="captures/android-train.png" alt="Écran Train : prochains départs Strasbourg → Haguenau, voie et ponctualité"></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <span class="eyebrow">Dans l'app</span>
+      <h2>Tout ce qu'il faut pour le trajet</h2>
+    </div>
+    <div class="gallery">
+      <figure class="shot"><img src="captures/android-bus.png" alt="Écran Bus avec les prochains passages de la ligne H" loading="lazy"><figcaption><b>Bus et tram</b><span>Les passages CTS en temps réel, de ton arrêt jusqu'à la gare.</span></figcaption></figure>
+      <figure class="shot"><img src="captures/android-nouvelle-alerte.png" alt="Création d'une alerte de départ" loading="lazy"><figcaption><b>Alertes de départ</b><span>Une notification avant de partir, avec le retard du jour.</span></figcaption></figure>
+      <figure class="shot"><img src="captures/android-theme.png" alt="Choix du thème et de l'icône" loading="lazy"><figcaption><b>Thèmes</b><span>Cinq thèmes et leur icône, ou les couleurs de ton fond d'écran.</span></figcaption></figure>
+      <figure class="shot"><img src="captures/android-reglages.png" alt="Réglages : gare, ligne de bus, arrêts" loading="lazy"><figcaption><b>Réglages</b><span>Ta gare, ta ligne et tes arrêts, choisis une fois.</span></figcaption></figure>
+      <figure class="shot wide"><img src="captures/android-widgets.png" alt="Widgets bus et train sur l'écran d'accueil" loading="lazy"><figcaption><b>Widgets</b><span>Le prochain bus et le prochain train sur l'écran d'accueil, sans ouvrir l'app.</span></figcaption></figure>
+      <figure class="shot wide"><img src="captures/android-material-you.png" alt="Thème Couleurs du système" loading="lazy" style="max-width: 50%; border: 4px solid var(--fg); background: var(--fg);"><figcaption><b>Couleurs du système</b><span>L'app reprend les teintes Material You de ton téléphone.</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="install" aria-labelledby="installer">
+    <div class="section-head" style="margin-bottom: 0">
+      <span class="eyebrow">Installation</span>
+      <h2 id="installer">Trois étapes, deux minutes</h2>
+    </div>
+    <ol class="steps">
+      <li><b>Télécharge l'APK</b><span>Depuis le téléphone, touche « Télécharger l'app ». Le fichier arrive dans Téléchargements.</span></li>
+      <li><b>Ouvre le fichier</b><span>Touche la notification de téléchargement, ou retrouve le fichier dans l'app Fichiers.</span></li>
+      <li><b>Autorise et installe</b><span>Si Android le demande, autorise l'installation depuis ton navigateur, puis touche « Installer ».</span></li>
+    </ol>
+    <p class="note"><strong>Version de test.</strong> Les mises à jour du pilote s'installeront par-dessus. La version définitive demandera de désinstaller celle-ci d'abord, et tes réglages seront à refaire.</p>
+  </section>
+
+  <footer>
+    <p>MokesTrain 1.0 · pilote du 19 octobre 2026 · données SNCF et CTS</p>
+    <p class="hash">SHA-256 : 8b034d742b5baf1c6ee070bef733422bbc4f7e012adb16a909db329f5517d950</p>
+  </footer>
+</div>
+</body>
+</html>
