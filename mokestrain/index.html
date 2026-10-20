@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="MokesTrain pour Android et iPhone : les trains Haguenau ⇄ Strasbourg, le bus et le tram CTS en temps réel.">
+<meta name="description" content="MokesTrain pour Android : les trains Haguenau ⇄ Strasbourg, le bus et le tram CTS en temps réel.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="icone.svg" type="image/svg+xml">
-<title>MokesTrain pour Android et iPhone</title>
+<title>MokesTrain pour Android</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -133,11 +133,6 @@
   }
   .steps b { font: 700 1.05rem var(--display); }
   .steps span { color: var(--muted); font-size: .95rem; }
-  .steps-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .steps a { color: var(--signal-ink); }
-  .button.secondary { background: transparent; color: var(--fg); border: 2px solid var(--line); box-shadow: none; }
-  .button.secondary:hover { box-shadow: none; border-color: var(--signal); }
-  .source { user-select: all; overflow-wrap: anywhere; }
   .note { border-top: 1px solid var(--line); padding-top: 1.25rem; color: var(--muted); font-size: .95rem; max-width: 46rem; }
   .note strong { color: var(--fg); }
 
@@ -148,7 +143,7 @@
     .hero { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
     .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .news { grid-template-columns: minmax(0, 1fr); }
-    .steps, .steps-4 { grid-template-columns: minmax(0, 1fr); }
+    .steps { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 420px) {
     .page { gap: 3.5rem; padding-block: 1.25rem 2.5rem; }
@@ -163,7 +158,7 @@
 <div class="page">
   <header class="masthead">
     <div class="brand"><img src="icone.svg" alt="">MokesTrain</div>
-    <span class="tag">Pilote Android et iPhone · v1.1</span>
+    <span class="tag">Pilote Android · v1.1</span>
   </header>
 
   <section class="hero">
@@ -180,13 +175,9 @@
       <div class="download">
         <a class="button" href="MokesTrain-1.1-build3.apk" download>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
-          Télécharger pour Android
+          Télécharger l'app
         </a>
-        <a class="button secondary" href="#iphone">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>
-          Sur iPhone
-        </a>
-        <p class="meta">Android : APK · 3,0 Mo, Android 8.0 ou plus<br>iPhone : avec SideStore, iOS 17 ou plus</p>
+        <p class="meta">APK · 3,0 Mo<br>Android 8.0 ou plus récent</p>
       </div>
     </div>
     <div class="phone"><img src="captures/android-train-1.1.png" alt="Écran Train : départs Haguenau → Strasbourg du lendemain, ponctualité et alerte posée sur le 06:00"></div>
@@ -222,37 +213,15 @@
 
   <section class="install" aria-labelledby="installer">
     <div class="section-head" style="margin-bottom: 0">
-      <span class="eyebrow">Installation sur Android</span>
+      <span class="eyebrow">Installation</span>
       <h2 id="installer">Trois étapes, deux minutes</h2>
     </div>
     <ol class="steps">
-      <li><b>Télécharge l'APK</b><span>Depuis le téléphone, touche « Télécharger pour Android ». Le fichier arrive dans Téléchargements.</span></li>
+      <li><b>Télécharge l'APK</b><span>Depuis le téléphone, touche « Télécharger l'app ». Le fichier arrive dans Téléchargements.</span></li>
       <li><b>Ouvre le fichier</b><span>Touche la notification de téléchargement, ou retrouve le fichier dans l'app Fichiers.</span></li>
       <li><b>Autorise et installe</b><span>Si Android le demande, autorise l'installation depuis ton navigateur, puis touche « Installer ».</span></li>
     </ol>
     <p class="note"><strong>Version de test.</strong> Les mises à jour du pilote s'installeront par-dessus. La version définitive demandera de désinstaller celle-ci d'abord, et tes réglages seront à refaire.</p>
-  </section>
-
-  <section class="install" id="iphone" aria-labelledby="installer-iphone">
-    <div class="section-head" style="margin-bottom: 0">
-      <span class="eyebrow">Installation sur iPhone</span>
-      <h2 id="installer-iphone">Sans l'App Store, avec SideStore</h2>
-      <p class="lead">MokesTrain n'est pas sur l'App Store. Sur iPhone, il s'installe avec SideStore et ton identifiant Apple habituel, gratuitement.</p>
-    </div>
-    <ol class="steps steps-4">
-      <li><b>Installe SideStore</b><span>Une seule fois, avec un ordinateur (Mac ou PC) : suis le guide sur <a href="https://sidestore.io">sidestore.io</a>.</span></li>
-      <li><b>Ajoute la source</b><span>Sur l'iPhone, touche « Ajouter la source ». Sinon, dans SideStore › Sources › +, colle l'adresse ci-dessous.</span></li>
-      <li><b>Installe MokesTrain</b><span>Dans SideStore, ouvre la source MokesTrain et touche « Free » pour installer l'app. Les mises à jour du pilote arriveront au même endroit.</span></li>
-      <li><b>Rafraîchis chaque semaine</b><span>Avec un compte Apple gratuit, l'app s'arrête au bout de 7 jours. Avant l'échéance, ouvre SideStore et touche « Refresh All » : tes réglages sont conservés.</span></li>
-    </ol>
-    <div class="download">
-      <a class="button" href="sidestore://source?url=https://mokes-.github.io/mokestrain/sidestore.json">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-        Ajouter la source
-      </a>
-      <p class="meta source">https://mokes-.github.io/mokestrain/sidestore.json</p>
-    </div>
-    <p class="note"><strong>Bon à savoir.</strong> Un compte Apple gratuit permet 3 apps installées de cette façon, SideStore compris.</p>
   </section>
 
   <footer>
