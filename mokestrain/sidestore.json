@@ -1,0 +1,41 @@
+{
+  "name": "MokesTrain",
+  "identifier": "fr.mokes.mokestrain.source",
+  "subtitle": "Pilote iPhone de MokesTrain",
+  "description": "Les trains Haguenau ⇄ Strasbourg, le bus et le tram CTS en temps réel.",
+  "iconURL": "https://mokes-.github.io/mokestrain/icone-ios.png",
+  "website": "https://mokes-.github.io/mokestrain/",
+  "tintColor": "8FD16F",
+  "apps": [
+    {
+      "name": "MokesTrain",
+      "bundleIdentifier": "fr.mokes.mokestrain",
+      "developerName": "MoKeS",
+      "subtitle": "Ton train, à la minute près.",
+      "localizedDescription": "Les prochains trains entre Haguenau et Strasbourg avec leurs retards et leur voie, le bus et le tram CTS en temps réel, des widgets, et une notification pour partir à l'heure.",
+      "iconURL": "https://mokes-.github.io/mokestrain/icone-ios.png",
+      "tintColor": "8FD16F",
+      "category": "navigation",
+      "versions": [
+        {
+          "version": "1.1",
+          "buildVersion": "3",
+          "date": "2026-10-21",
+          "localizedDescription": "La liste continue le soir sur le lendemain, bus suivants en faisant défiler, voie habituelle et changements de voie, notifications posées d'un appui sur un train ou un bus, à choisir alerte par alerte.",
+          "downloadURL": "https://mokes-.github.io/mokestrain/MokesTrain-1.1-build3.ipa",
+          "size": 8504674,
+          "minOSVersion": "17.0"
+        }
+      ],
+      "appPermissions": {
+        "entitlements": [
+          "com.apple.security.application-groups"
+        ],
+        "privacy": {
+          "NSLocationWhenInUseUsageDescription": "Votre position approximative choisit le sens du trajet : près de votre gare, l'aller ; à Strasbourg, le retour. Elle reste sur le téléphone."
+        }
+      }
+    }
+  ],
+  "news": []
+}
