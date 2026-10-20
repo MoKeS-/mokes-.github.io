@@ -114,6 +114,15 @@
   .wide { grid-column: span 2; }
   .wide img { border: 0; border-radius: 20px; background: none; }
 
+  /* Nouveautés */
+  .news { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .news li {
+    background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--signal);
+    border-radius: 14px; padding: 1.1rem 1.25rem; display: grid; gap: .35rem; align-content: start;
+  }
+  .news b { font: 700 1.1rem var(--display); }
+  .news span { color: var(--muted); font-size: .95rem; line-height: 1.5; }
+
   /* Installation */
   .install { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 2rem; display: grid; gap: 1.75rem; }
   .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; counter-reset: step; }
@@ -133,6 +142,7 @@
   @media (max-width: 860px) {
     .hero { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
     .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .news { grid-template-columns: minmax(0, 1fr); }
     .steps { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 420px) {
@@ -154,7 +164,7 @@
   <section class="hero">
     <div class="hero-text">
       <h1>Ton train, <em>à la minute près.</em></h1>
-      <p class="lead">Les prochains trains entre Haguenau et Strasbourg avec leurs retards et leur voie, le bus et le tram CTS en temps réel, des widgets et une alerte avant de partir.</p>
+      <p class="lead">Les trains entre Haguenau et Strasbourg avec leurs retards et leur voie, le bus et le tram CTS en temps réel, des widgets, et une notification pour partir à l'heure.</p>
 
       <div class="board" aria-label="Exemple de départs">
         <div class="board-row"><time>07:12</time><span class="dest"><b>Strasbourg</b>Voie 2</span><span class="status">À l'heure</span></div>
@@ -170,7 +180,20 @@
         <p class="meta">APK · 3,0 Mo<br>Android 8.0 ou plus récent</p>
       </div>
     </div>
-    <div class="phone"><img src="captures/android-train.png" alt="Écran Train : prochains départs Strasbourg → Haguenau, voie et ponctualité"></div>
+    <div class="phone"><img src="captures/android-train-1.1.png" alt="Écran Train : départs Haguenau → Strasbourg du lendemain, ponctualité et alerte posée sur le 06:00"></div>
+  </section>
+
+  <section aria-labelledby="nouveautes">
+    <div class="section-head">
+      <span class="eyebrow">Nouveau dans la 1.1</span>
+      <h2 id="nouveautes">Plus loin dans la journée, mieux prévenu</h2>
+    </div>
+    <ul class="news">
+      <li><b>La liste continue</b><span>Fais défiler : les trains des 24 prochaines heures et les bus suivants arrivent au fur et à mesure. Le soir, la liste passe au lendemain matin.</span></li>
+      <li><b>Voie habituelle</b><span>L'app connaît la voie habituelle de chaque train : un changement de voie saute aux yeux.</span></li>
+      <li><b>Notification d'un appui</b><span>Touche un train ou un bus de la liste pour être prévenu quand partir, les jours de ton choix. Pour un train, c'est l'horaire qui compte, quel que soit le train qui l'assure ce jour-là.</span></li>
+      <li><b>À toi de choisir</b><span>Pour chaque alerte train : l'heure de partir, un changement de voie, une suppression. Coche ce qui t'intéresse.</span></li>
+    </ul>
   </section>
 
   <section>
@@ -179,12 +202,12 @@
       <h2>Tout ce qu'il faut pour le trajet</h2>
     </div>
     <div class="gallery">
-      <figure class="shot"><img src="captures/android-bus.png" alt="Écran Bus avec les prochains passages de la ligne H" loading="lazy"><figcaption><b>Bus et tram</b><span>Les passages CTS en temps réel, de ton arrêt jusqu'à la gare.</span></figcaption></figure>
-      <figure class="shot"><img src="captures/android-nouvelle-alerte.png" alt="Création d'une alerte de départ" loading="lazy"><figcaption><b>Notifications</b><span>Un appui sur un train ou un bus, et une notification te dit quand partir, retard compris. Changement de voie ou suppression : à toi de choisir.</span></figcaption></figure>
+      <figure class="shot"><img src="captures/android-bus-1.1.png" alt="Écran CTS avec les prochains passages de la ligne H" loading="lazy"><figcaption><b>Bus et tram</b><span>Les passages CTS en temps réel, de ton arrêt jusqu'à la gare, et les suivants en faisant défiler.</span></figcaption></figure>
+      <figure class="shot"><img src="captures/android-alerte-train-1.1.png" alt="Alerte posée sur le train de 06:33 : temps pour rejoindre la gare, jours et notifications à cocher" loading="lazy"><figcaption><b>Notifications</b><span>Un appui sur un train ou un bus, et une notification te dit quand partir, retard compris. Changement de voie ou suppression : à toi de choisir.</span></figcaption></figure>
       <figure class="shot"><img src="captures/android-theme.png" alt="Choix du thème et de l'icône" loading="lazy"><figcaption><b>Thèmes</b><span>Cinq thèmes et leur icône, ou les couleurs de ton fond d'écran.</span></figcaption></figure>
-      <figure class="shot"><img src="captures/android-reglages.png" alt="Réglages : gare, ligne de bus, arrêts" loading="lazy"><figcaption><b>Réglages</b><span>Ta gare, ta ligne et tes arrêts, choisis une fois.</span></figcaption></figure>
+      <figure class="shot"><img src="captures/android-reglages-1.1.png" alt="Réglages : gare, ligne de bus, arrêts" loading="lazy"><figcaption><b>Réglages</b><span>Ta gare, ta ligne et tes arrêts, choisis une fois.</span></figcaption></figure>
       <figure class="shot wide"><img src="captures/android-widgets.png" alt="Widgets bus et train sur l'écran d'accueil" loading="lazy"><figcaption><b>Widgets</b><span>Le prochain bus et le prochain train sur l'écran d'accueil, sans ouvrir l'app.</span></figcaption></figure>
-      <figure class="shot wide"><img src="captures/android-material-you.png" alt="Thème Couleurs du système" loading="lazy" style="max-width: 50%; border: 4px solid var(--fg); background: var(--fg);"><figcaption><b>Couleurs du système</b><span>L'app reprend les teintes Material You de ton téléphone.</span></figcaption></figure>
+      <figure class="shot wide"><img src="captures/android-material-you-1.1.png" alt="Thème Couleurs du système" loading="lazy" style="max-width: 50%; border: 4px solid var(--fg); background: var(--fg);"><figcaption><b>Couleurs du système</b><span>L'app reprend les teintes Material You de ton téléphone.</span></figcaption></figure>
     </div>
   </section>
 
